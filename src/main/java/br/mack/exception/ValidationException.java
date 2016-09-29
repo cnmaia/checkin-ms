@@ -8,5 +8,14 @@ import java.util.Map;
 public class ValidationException extends RuntimeException {
     private static final long serialVersionUID = 5259441845882255226L;
 
-    public ValidationException(Map<String, String> errors) { super(); }
+    private Map<String, String> validationErrors;
+
+    public ValidationException(Map<String, String> errors) {
+        super();
+        this.validationErrors = errors;
+    }
+
+    public Map<String, String> getValidationErrors() {
+        return validationErrors;
+    }
 }

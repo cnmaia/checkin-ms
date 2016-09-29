@@ -10,14 +10,14 @@ import java.util.Date;
  */
 public class CheckIn {
     @Id
-    private final long id;
+    private final Long id;
     @DBRef
     private final User user;
     private final double latitude;
     private final double longitude;
     private final Date checkInTime;
 
-    public CheckIn(long id, User user, double latitude, double longitude, Date checkInTime) {
+    public CheckIn(Long id, User user, double latitude, double longitude, Date checkInTime) {
         this.id = id;
         this.user = user;
         this.latitude = latitude;
@@ -46,13 +46,13 @@ public class CheckIn {
     }
 
     public static class Builder {
-        private long id;
+        private Long id;
         private User user;
         private double latitude;
         private double longitude;
         private Date checkInTime;
 
-        public Builder(long id) {
+        public Builder(Long id) {
             this.id = id;
         }
 
