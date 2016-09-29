@@ -10,50 +10,74 @@ import java.util.Date;
  */
 public class CheckIn {
     @Id
-    private long id;
+    private final long id;
     @DBRef
-    private User user;
-    private double latitude;
-    private double longitude;
-    private Date checkInTime;
+    private final User user;
+    private final double latitude;
+    private final double longitude;
+    private final Date checkInTime;
+
+    public CheckIn(long id, User user, double latitude, double longitude, Date checkInTime) {
+        this.id = id;
+        this.user = user;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.checkInTime = checkInTime;
+    }
 
     public long getId() {
         return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public User getUser() {
         return user;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     public double getLatitude() {
         return latitude;
-    }
-
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
     }
 
     public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
-    }
-
     public Date getCheckInTime() {
         return checkInTime;
     }
 
-    public void setCheckInTime(Date checkInTime) {
-        this.checkInTime = checkInTime;
+    public static class Builder {
+        private long id;
+        private User user;
+        private double latitude;
+        private double longitude;
+        private Date checkInTime;
+
+        public Builder(long id) {
+            this.id = id;
+        }
+
+        public Builder setUser(User user) {
+            this.user = user;
+            return this;
+        }
+
+        public Builder setLatitude(double latitude) {
+            this.latitude = latitude;
+            return this;
+        }
+
+        public Builder setLongitude(double longitude) {
+            this.longitude = longitude;
+            return this;
+        }
+
+        public Builder setCheckInTime(Date checkInTime) {
+            this.checkInTime = checkInTime;
+            return this;
+        }
+
+        public CheckIn build() {
+            return new CheckIn(this.id, this.user, this.latitude, this.longitude, this.checkInTime);
+        }
     }
 }
