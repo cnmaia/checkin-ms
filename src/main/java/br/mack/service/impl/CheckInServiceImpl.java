@@ -10,6 +10,7 @@ import br.mack.repository.CheckInRepository;
 import br.mack.repository.UserRepository;
 import br.mack.service.CheckInService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -18,6 +19,7 @@ import java.util.Map;
 /**
  * Created by cmaia on 29/09/16
  */
+@Service
 public class CheckInServiceImpl implements CheckInService {
 
     @Autowired
