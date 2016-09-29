@@ -1,5 +1,7 @@
 package br.mack.model;
 
+import java.util.Date;
+
 /**
  * Created by cmaia on 29/09/16
  */
@@ -8,6 +10,7 @@ public class CheckIn {
     private User user;
     private double latitude;
     private double longitude;
+    private Date checkInTime;
 
     public long getId() {
         return id;
@@ -39,5 +42,13 @@ public class CheckIn {
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
+    }
+
+    public Date getCheckInTime() {
+        return checkInTime;
+    }
+
+    public void setCheckInTime(Date checkInTime) {
+        this.checkInTime = checkInTime;
     }
 }
