@@ -62,6 +62,11 @@ public class CheckInServiceImpl implements CheckInService {
     private void validate(CheckinRequest request) {
         Map<String, String> validationErrors = new HashMap<String, String>();
 
+        if (request == null) {
+            validationErrors.put("request", "The request is null or empty");
+            throw new ValidationException(validationErrors);
+        }
+
         if (request.getUserId() <= 0) {
             validationErrors.put("userId", "Invalid user id");
         }

@@ -33,5 +33,6 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-data-mongodb:$springBootVersion")
     compile("org.springframework.boot:spring-boot-starter-hateoas:$springBootVersion")
 
-    testCompile group: 'junit', name: 'junit', version: '4.11'
+    testCompile("org.springframework.boot:spring-boot-starter-test:$springBootVersion")
+
 }
