@@ -85,4 +85,14 @@ public class CheckInServiceImpl implements CheckInService {
             throw new ValidationException(validationErrors);
         }
     }
+
+    public CheckInServiceImpl setCheckInRepository(CheckInRepository checkInRepository) {
+        this.checkInRepository = checkInRepository;
+        return this;
+    }
+
+    public CheckInServiceImpl setUserRepository(UserRepository userRepository) {
+        this.userRepository = userRepository;
+        return this;
+    }
 }
