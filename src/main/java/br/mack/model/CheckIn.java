@@ -1,12 +1,17 @@
 package br.mack.model;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+
 import java.util.Date;
 
 /**
  * Created by cmaia on 29/09/16
  */
 public class CheckIn {
+    @Id
     private long id;
+    @DBRef
     private User user;
     private double latitude;
     private double longitude;

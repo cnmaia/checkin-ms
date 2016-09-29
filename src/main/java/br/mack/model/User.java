@@ -1,9 +1,12 @@
 package br.mack.model;
 
+import org.springframework.data.annotation.Id;
+
 /**
  * Created by cmaia on 29/09/16
  */
 public class User {
+    @Id
     private long id;
     private String name;
     private String email;
