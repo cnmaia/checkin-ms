@@ -1,6 +1,8 @@
 package br.mack;
 
+import br.mack.controller.dto.CheckInInfoResponse;
 import br.mack.controller.dto.CheckinRequest;
+import br.mack.exception.ResourceNotFoundException;
 import br.mack.exception.ValidationException;
 import br.mack.model.CheckIn;
 import br.mack.model.User;
@@ -15,7 +17,10 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import java.util.Date;
+
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.*;
 
 /**
@@ -32,12 +37,20 @@ public class CheckInServiceTest {
     private CheckInService checkInService;
 
     private User userTest;
+    private CheckIn checkInTest;
 
     @Before
     public void setUp() {
         checkInService = new CheckInServiceImpl();
         MockitoAnnotations.initMocks(this);
+
         userTest = new User(1L, "UserTest", "user@test.com");
+        checkInTest = new CheckIn.Builder(1L)
+                .setUser(userTest)
+                .setCheckInTime(new Date())
+                .setLatitude(1.0)
+                .setLongitude(1.0)
+                .build();
     }
 
     @Test
@@ -84,5 +97,22 @@ public class CheckInServiceTest {
         } catch (ValidationException ex) {
             assertEquals(3, ex.getValidationErrors().size());
         }
+    }
+
+    @Test
+    public void testGetCheckInInfo_Success() {
+        Mockito.when(checkInRepository.findOne(anyLong())).thenReturn(checkInTest);
+
+        CheckInInfoResponse checkInfo = checkInService.getCheckInfo(1L);
+
+        assertNotNull(checkInfo);
+        verify(checkInRepository, times(1)).findOne(anyLong());
+    }
+
+    @Test(expected = ResourceNotFoundException.class)
+    public void testGetCheckInInfo_NotExistentCheckIn_ShouldThrowException() {
+        Mockito.when(checkInRepository.findOne(anyLong())).thenReturn(null);
+
+        checkInService.getCheckInfo(1L);
     }
 }
