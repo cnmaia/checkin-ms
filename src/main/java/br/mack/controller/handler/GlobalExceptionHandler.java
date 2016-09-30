@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 import java.util.Map;
 
@@ -23,5 +24,15 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ValidationException.class)
     public ResponseEntity handleValidationException(ValidationException ex) {
         return new ResponseEntity<Map<String, String>>(ex.getValidationErrors(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(NoHandlerFoundException.class)
+    public ResponseEntity handleNotFound(NoHandlerFoundException ex) {
+        return new ResponseEntity<String>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity handleGenericException() {
+        return new ResponseEntity<String>("A problem occurred when trying to process your request. Please, try again.", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

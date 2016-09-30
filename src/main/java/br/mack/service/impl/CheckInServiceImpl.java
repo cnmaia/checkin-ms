@@ -58,7 +58,7 @@ public class CheckInServiceImpl implements CheckInService {
             return checkInInfo;
         }
 
-        throw new ResourceNotFoundException(String.format("Check in [%d] not found.", checkInId));
+        throw new ResourceNotFoundException(String.format("CheckIn [%d] not found.", checkInId));
     }
 
     private void validate(CheckinRequest request) {
