@@ -7,16 +7,17 @@ import java.util.Date;
  * Created by cmaia on 29/09/16
  */
 @Entity
+@Table(name = "checkins")
 public class CheckIn {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private final Long id;
+    private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private final User user;
-    private final double latitude;
-    private final double longitude;
-    private final Date checkInTime;
+    private User user;
+    private double latitude;
+    private double longitude;
+    private Date checkInTime;
 
     public CheckIn(Long id, User user, double latitude, double longitude, Date checkInTime) {
         this.id = id;
@@ -26,24 +27,51 @@ public class CheckIn {
         this.checkInTime = checkInTime;
     }
 
-    public long getId() {
+    public CheckIn() {}
+
+    public Long getId() {
         return id;
+    }
+
+    public CheckIn setId(Long id) {
+        this.id = id;
+        return this;
     }
 
     public User getUser() {
         return user;
     }
 
+    public CheckIn setUser(User user) {
+        this.user = user;
+        return this;
+    }
+
     public double getLatitude() {
         return latitude;
+    }
+
+    public CheckIn setLatitude(double latitude) {
+        this.latitude = latitude;
+        return this;
     }
 
     public double getLongitude() {
         return longitude;
     }
 
+    public CheckIn setLongitude(double longitude) {
+        this.longitude = longitude;
+        return this;
+    }
+
     public Date getCheckInTime() {
         return checkInTime;
+    }
+
+    public CheckIn setCheckInTime(Date checkInTime) {
+        this.checkInTime = checkInTime;
+        return this;
     }
 
     public static class Builder {
