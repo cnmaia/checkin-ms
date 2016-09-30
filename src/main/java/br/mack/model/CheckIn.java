@@ -7,13 +7,12 @@ import java.util.Date;
  * Created by cmaia on 29/09/16
  */
 @Entity
-@Table(name = "checkin")
 public class CheckIn {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private final Long id;
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "userId")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private final User user;
     private final double latitude;
     private final double longitude;

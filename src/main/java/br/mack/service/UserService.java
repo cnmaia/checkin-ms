@@ -1,6 +1,6 @@
 package br.mack.service;
 
-import br.mack.model.User;
+import br.mack.controller.dto.UserRequest;
 
 /**
  * Created by cmaia on 30/09/16
@@ -12,5 +12,5 @@ public interface UserService {
      *
      * @param user the user
      */
-    void create(User user);
+    void create(UserRequest user);
 }

@@ -1,5 +1,6 @@
 package br.mack.service.impl;
 
+import br.mack.controller.dto.UserRequest;
 import br.mack.exception.ValidationException;
 import br.mack.model.User;
 import br.mack.repository.UserRepository;
@@ -21,12 +22,14 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public void create(User user) {
+    public void create(UserRequest user) {
         validate(user);
-        userRepository.save(user);
+
+        User userEntity = new User(null, user.getName(), user.getEmail());
+        userRepository.save(userEntity);
     }
 
-    private void validate(User user) {
+    private void validate(UserRequest user) {
         Map<String, String> validationErrors = new HashMap<String, String>();
 
         if (user.getEmail() == null || user.getEmail().isEmpty() || !EmailValidator.getInstance().isValid(user.getEmail())) {

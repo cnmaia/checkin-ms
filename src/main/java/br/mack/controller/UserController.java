@@ -1,6 +1,6 @@
 package br.mack.controller;
 
-import br.mack.model.User;
+import br.mack.controller.dto.UserRequest;
 import br.mack.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,7 +21,7 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping(value = {"", "/"}, method = RequestMethod.POST)
-    public ResponseEntity createUser(@RequestBody User user) {
+    public ResponseEntity createUser(@RequestBody UserRequest user) {
         userService.create(user);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }

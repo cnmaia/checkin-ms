@@ -28,4 +28,12 @@ public class ResponseHelper {
         response.setSuccess(false);
         return new ResponseEntity<ServerResponse>(HttpStatus.OK);
     }
+
+    public static <T> ResponseEntity fail(T payload, HttpStatus status) {
+        ServerResponse<T> response = new ServerResponse<T>();
+        response.setPayload(payload);
+        response.setSuccess(false);
+
+        return new ResponseEntity<ServerResponse<T>>(response, status);
+    }
 }
