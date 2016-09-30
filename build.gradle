@@ -20,19 +20,18 @@ repositories {
     mavenCentral()
 }
 
-ext {
-    springBootVersion = "1.4.1.RELEASE"
-}
-
 dependencies {
-    compile("org.springframework.boot:spring-boot-starter-web:$springBootVersion") {
+    compile("org.springframework.boot:spring-boot-starter-web") {
         exclude module: "spring-boot-starter-tomcat"
     }
-    compile("org.springframework.boot:spring-boot-starter-jetty:$springBootVersion")
-    compile("org.springframework.boot:spring-boot-starter-actuator:$springBootVersion")
-    compile("org.springframework.boot:spring-boot-starter-data-mongodb:$springBootVersion")
-    compile("org.springframework.boot:spring-boot-starter-hateoas:$springBootVersion")
+    compile("org.springframework.boot:spring-boot-starter-jetty")
+    compile("org.springframework.boot:spring-boot-starter-actuator")
+    compile("org.springframework.boot:spring-boot-starter-hateoas:")
+    compile("org.springframework.boot:spring-boot-starter-data-jpa")
 
-    testCompile("org.springframework.boot:spring-boot-starter-test:$springBootVersion")
+    compile("org.postgresql:postgresql")
+    compile("commons-validator:commons-validator:1.5.1")
+
+    testCompile("org.springframework.boot:spring-boot-starter-test")
 
 }
