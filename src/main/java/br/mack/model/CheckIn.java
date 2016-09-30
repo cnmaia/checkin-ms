@@ -1,17 +1,19 @@
 package br.mack.model;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-
+import javax.persistence.*;
 import java.util.Date;
 
 /**
  * Created by cmaia on 29/09/16
  */
+@Entity
+@Table(name = "checkin")
 public class CheckIn {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private final Long id;
-    @DBRef
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "userId")
     private final User user;
     private final double latitude;
     private final double longitude;

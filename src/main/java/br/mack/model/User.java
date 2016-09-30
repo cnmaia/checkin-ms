@@ -1,12 +1,15 @@
 package br.mack.model;
 
-import org.springframework.data.annotation.Id;
+import javax.persistence.*;
 
 /**
  * Created by cmaia on 29/09/16
  */
+@Entity
+@Table(name = "user")
 public class User {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private final long id;
     private final String name;
     private final String email;
