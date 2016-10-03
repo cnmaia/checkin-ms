@@ -3,6 +3,9 @@ package br.mack.service;
 import br.mack.controller.dto.CheckInInfoResponse;
 import br.mack.controller.dto.CheckinRequest;
 import br.mack.exception.ResourceNotFoundException;
+import br.mack.model.CheckIn;
+
+import java.util.List;
 
 /**
  * Created by cmaia on 29/09/16
@@ -24,4 +27,11 @@ public interface CheckInService {
      * @throws ResourceNotFoundException the resource not found exception
      */
     CheckInInfoResponse getCheckInfo(long checkInId) throws ResourceNotFoundException;
+
+    /**
+     * List list.
+     *
+     * @return the list
+     */
+    List<CheckIn> list();
 }

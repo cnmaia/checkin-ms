@@ -25,4 +25,9 @@ public class UserController {
         userService.create(user);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
+
+    @RequestMapping(value = {"", "/"}, method = RequestMethod.GET)
+    public ResponseEntity listAllUsers() {
+        return new ResponseEntity(userService.list(), HttpStatus.OK);
+    }
 }
