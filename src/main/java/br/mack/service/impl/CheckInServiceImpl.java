@@ -2,20 +2,17 @@ package br.mack.service.impl;
 
 import br.mack.controller.dto.CheckInInfoResponse;
 import br.mack.controller.dto.CheckinRequest;
-import br.mack.exception.IntegrationException;
 import br.mack.exception.ResourceNotFoundException;
 import br.mack.exception.ValidationException;
 import br.mack.model.CheckIn;
-import br.mack.model.User;
+import br.mack.model.dto.UserDto;
 import br.mack.repository.CheckInRepository;
 import br.mack.repository.UserRepository;
 import br.mack.service.CheckInService;
+import br.mack.service.helper.ServiceHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import retrofit.Call;
-import retrofit.Response;
 
-import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -42,17 +39,10 @@ public class CheckInServiceImpl implements CheckInService {
                 .setLongitude(request.getLongitude())
                 .setCheckInTime(new Date());
 
-        try {
-            Call<User> call = userRepository.find(request.getUserId());
-            Response<User> response = call.execute();
-            if (response.isSuccess()) {
-                checkInBuilder.setUser(response.body());
-                checkInRepository.save(checkInBuilder.build());
-            } else {
-                throw new ResourceNotFoundException(String.format("User with id [%d] not found.", request.getUserId()));
-            }
-        } catch (IOException ex) {
-            throw new IntegrationException("Could not fetch user");
+        UserDto userDto = ServiceHelper.executeCall(userRepository.find(request.getUserId()));
+        if (userDto != null) {
+            checkInBuilder.setUser(userDto.getId());
+            checkInRepository.save(checkInBuilder.build());
         }
     }
 
@@ -65,8 +55,11 @@ public class CheckInServiceImpl implements CheckInService {
 
             checkInInfo.setLatitude(checkIn.getLatitude());
             checkInInfo.setLongitude(checkIn.getLongitude());
-            checkInInfo.setUserEmail(checkIn.getUser().getEmail());
             checkInInfo.setCheckinTime(checkIn.getCheckInTime());
+            UserDto userDto = ServiceHelper.executeCall(userRepository.find(checkIn.getUserId()));
+            if (userDto != null) {
+                checkInInfo.setUserEmail(userDto.getEmail());
+            }
 
             return checkInInfo;
         }

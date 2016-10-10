@@ -5,7 +5,7 @@ import br.mack.controller.dto.CheckinRequest;
 import br.mack.exception.ResourceNotFoundException;
 import br.mack.exception.ValidationException;
 import br.mack.model.CheckIn;
-import br.mack.model.User;
+import br.mack.model.dto.UserDto;
 import br.mack.repository.CheckInRepository;
 import br.mack.repository.UserRepository;
 import br.mack.service.CheckInService;
@@ -38,8 +38,8 @@ public class CheckInServiceTest {
     @InjectMocks
     private CheckInService checkInService;
 
-    private Call<User> callUser;
-    private User userTest;
+    private Call<UserDto> callUser;
+    private UserDto userDtoTest;
     private CheckIn checkInTest;
 
     @Before
@@ -48,9 +48,9 @@ public class CheckInServiceTest {
         MockitoAnnotations.initMocks(this);
 
         callUser = null;
-        userTest = new User(1L, "UserTest", "user@test.com");
+        userDtoTest = new UserDto(1L, "UserTest", "user@test.com");
         checkInTest = new CheckIn.Builder(1L)
-                .setUser(userTest)
+                .setUser(userDtoTest)
                 .setCheckInTime(new Date())
                 .setLatitude(1.0)
                 .setLongitude(1.0)
@@ -60,7 +60,7 @@ public class CheckInServiceTest {
 //    @Test
 //    public void testCheckIn_Success() throws Exception {
 //        Mockito.when(checkInRepository.save(any(CheckIn.class))).thenReturn(null);
-//        Mockito.when(callUser.execute()).thenReturn(new Response(null, userTest,null));
+//        Mockito.when(callUser.execute()).thenReturn(new Response(null, userDtoTest,null));
 //        Mockito.when(userRepository.find(anyLong())).thenReturn(callUser);
 //
 //        CheckinRequest request = new CheckinRequest();

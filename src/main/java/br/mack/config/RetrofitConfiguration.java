@@ -1,12 +1,16 @@
 package br.mack.config;
 
 import br.mack.repository.UserRepository;
-import com.squareup.okhttp.OkHttpClient;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import okhttp3.OkHttpClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import retrofit.JacksonConverterFactory;
-import retrofit.Retrofit;
+import retrofit2.Retrofit;
+import retrofit2.converter.jackson.JacksonConverterFactory;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by cmaia on 09/10/16
@@ -18,16 +22,18 @@ public class RetrofitConfiguration {
     private String usersUrl;
 
     @Bean
-    public OkHttpClient client() {
-        return new OkHttpClient();
-    }
+    public Retrofit getRetrofit() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        SimpleModule module = new SimpleModule();
+        objectMapper.registerModule(module);
 
-    @Bean
-    public Retrofit retrofit(OkHttpClient client) {
         return new Retrofit.Builder()
-                .addConverterFactory(JacksonConverterFactory.create())
+                .client(new OkHttpClient.Builder()
+                        .readTimeout(60, TimeUnit.SECONDS)
+                        .connectTimeout(60, TimeUnit.SECONDS)
+                        .build())
                 .baseUrl(usersUrl)
-                .client(client)
+                .addConverterFactory(JacksonConverterFactory.create(objectMapper))
                 .build();
     }
 

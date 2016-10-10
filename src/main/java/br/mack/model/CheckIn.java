@@ -12,16 +12,14 @@ public class CheckIn {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
+    private Long userId;
     private double latitude;
     private double longitude;
     private Date checkInTime;
 
-    public CheckIn(Long id, User user, double latitude, double longitude, Date checkInTime) {
+    public CheckIn(Long id, Long userId, double latitude, double longitude, Date checkInTime) {
         this.id = id;
-        this.user = user;
+        this.userId = userId;
         this.latitude = latitude;
         this.longitude = longitude;
         this.checkInTime = checkInTime;
@@ -38,12 +36,12 @@ public class CheckIn {
         return this;
     }
 
-    public User getUser() {
-        return user;
+    public Long getUserId() {
+        return userId;
     }
 
-    public CheckIn setUser(User user) {
-        this.user = user;
+    public CheckIn setUserId(Long userId) {
+        this.userId = userId;
         return this;
     }
 
@@ -76,7 +74,7 @@ public class CheckIn {
 
     public static class Builder {
         private Long id;
-        private User user;
+        private Long user;
         private double latitude;
         private double longitude;
         private Date checkInTime;
@@ -85,7 +83,7 @@ public class CheckIn {
             this.id = id;
         }
 
-        public Builder setUser(User user) {
+        public Builder setUser(Long user) {
             this.user = user;
             return this;
         }
