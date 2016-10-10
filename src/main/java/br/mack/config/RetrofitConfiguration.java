@@ -2,6 +2,7 @@ package br.mack.config;
 
 import br.mack.repository.UserRepository;
 import com.squareup.okhttp.OkHttpClient;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import retrofit.JacksonConverterFactory;
@@ -13,6 +14,9 @@ import retrofit.Retrofit;
 @Configuration
 public class RetrofitConfiguration {
 
+    @Value("${url.users.service}")
+    private String usersUrl;
+
     @Bean
     public OkHttpClient client() {
         return new OkHttpClient();
@@ -22,7 +26,7 @@ public class RetrofitConfiguration {
     public Retrofit retrofit(OkHttpClient client) {
         return new Retrofit.Builder()
                 .addConverterFactory(JacksonConverterFactory.create())
-                .baseUrl("http://localhost:8081/users/api")
+                .baseUrl(usersUrl)
                 .client(client)
                 .build();
     }

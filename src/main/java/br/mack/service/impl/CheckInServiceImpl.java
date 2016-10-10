@@ -11,7 +11,6 @@ import br.mack.repository.CheckInRepository;
 import br.mack.repository.UserRepository;
 import br.mack.service.CheckInService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import retrofit.Call;
 import retrofit.Response;
@@ -49,6 +48,8 @@ public class CheckInServiceImpl implements CheckInService {
             if (response.isSuccess()) {
                 checkInBuilder.setUser(response.body());
                 checkInRepository.save(checkInBuilder.build());
+            } else {
+                throw new ResourceNotFoundException(String.format("User with id [%d] not found.", request.getUserId()));
             }
         } catch (IOException ex) {
             throw new IntegrationException("Could not fetch user");

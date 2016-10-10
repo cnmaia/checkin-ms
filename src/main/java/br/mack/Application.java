@@ -10,6 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan({
         "br.mack.controller",
         "br.mack.repository",
+        "br.mack.config",
         "br.mack.service"
 })
 @EnableAutoConfiguration
