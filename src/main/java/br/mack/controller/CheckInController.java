@@ -1,8 +1,6 @@
 package br.mack.controller;
 
-import br.mack.controller.dto.CheckInInfoResponse;
 import br.mack.controller.dto.CheckinRequest;
-import br.mack.model.CheckIn;
 import br.mack.service.CheckInService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,11 +25,11 @@ public class CheckInController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity getCheckinInformation(@PathVariable("id") Long checkinId) {
-        return new ResponseEntity<CheckInInfoResponse>(checkInService.getCheckInfo(checkinId), HttpStatus.OK);
+        return ResponseHelper.ok(checkInService.getCheckInfo(checkinId), HttpStatus.OK);
     }
 
     @RequestMapping(value = {"", "/"}, method = RequestMethod.GET)
     public ResponseEntity getAllCheckins() {
-        return new ResponseEntity(checkInService.list(), HttpStatus.OK);
+        return ResponseHelper.ok(checkInService.list(), HttpStatus.OK);
     }
 }

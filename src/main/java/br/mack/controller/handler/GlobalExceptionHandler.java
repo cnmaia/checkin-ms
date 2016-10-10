@@ -1,5 +1,6 @@
 package br.mack.controller.handler;
 
+import br.mack.exception.IntegrationException;
 import br.mack.exception.ResourceNotFoundException;
 import br.mack.exception.ValidationException;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ValidationException.class)
     public ResponseEntity handleValidationException(ValidationException ex) {
         return new ResponseEntity<Map<String, String>>(ex.getValidationErrors(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(IntegrationException.class)
+    public ResponseEntity handleIntegrationException(IntegrationException ex) {
+        return new ResponseEntity<String>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(NoHandlerFoundException.class)

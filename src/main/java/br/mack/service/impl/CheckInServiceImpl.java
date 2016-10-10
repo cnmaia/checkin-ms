@@ -2,6 +2,7 @@ package br.mack.service.impl;
 
 import br.mack.controller.dto.CheckInInfoResponse;
 import br.mack.controller.dto.CheckinRequest;
+import br.mack.exception.IntegrationException;
 import br.mack.exception.ResourceNotFoundException;
 import br.mack.exception.ValidationException;
 import br.mack.model.CheckIn;
@@ -10,8 +11,12 @@ import br.mack.repository.CheckInRepository;
 import br.mack.repository.UserRepository;
 import br.mack.service.CheckInService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import retrofit.Call;
+import retrofit.Response;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -38,10 +43,16 @@ public class CheckInServiceImpl implements CheckInService {
                 .setLongitude(request.getLongitude())
                 .setCheckInTime(new Date());
 
-        User user = userRepository.findOne(request.getUserId());
-        checkInBuilder.setUser(user);
-
-        checkInRepository.save(checkInBuilder.build());
+        try {
+            Call<User> call = userRepository.find(request.getUserId());
+            Response<User> response = call.execute();
+            if (response.isSuccess()) {
+                checkInBuilder.setUser(response.body());
+                checkInRepository.save(checkInBuilder.build());
+            }
+        } catch (IOException ex) {
+            throw new IntegrationException("Could not fetch user");
+        }
     }
 
     @Override
@@ -70,7 +81,8 @@ public class CheckInServiceImpl implements CheckInService {
     private void validate(CheckinRequest request) {
         Map<String, String> validationErrors = new HashMap<String, String>();
 
-        if (request == null) {
+        if (request == null
+                || request.isEmpty()) {
             validationErrors.put("request", "The request is null or empty");
             throw new ValidationException(validationErrors);
         }
