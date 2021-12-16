@@ -1,5 +1,7 @@
 # Check-in Microservice Demo Project
 
+Testing a college project.
+
 ## Postgres running in docker
 
 ```
